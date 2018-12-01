@@ -1,0 +1,25 @@
+{
+  "name": "lofibot",
+  "version": "1.0.0",
+  "description": "hey boys",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cyu2019/lofibot.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/cyu2019/lofibot/issues"
+  },
+  "homepage": "https://github.com/cyu2019/lofibot#readme",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "ejs": "^2.6.1",
+    "express": "^4.16.4",
+    "multer": "^1.4.1"
+  }
+}

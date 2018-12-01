@@ -1,0 +1,41 @@
+<link href="https://fonts.googleapis.com/css?family=Montserrat|Raleway" rel="stylesheet">
+<style>
+body,html {
+	margin:0px;
+	padding:0px;
+	background-color:#A3DB92;
+	color:white;
+}
+
+#content {
+	font-family: 'Montserrat', sans-serif;
+	display:flex;
+	align-items:center;
+	justify-content:center;
+	height:100vh
+}
+#choose {
+	display:inline-block;
+	padding:3px;
+	width:120px;
+	background-color:#FFC7A3;
+}
+#formBox {
+	text-align:center;
+}
+
+
+</style>
+
+<div id="content">
+	<div id="formBox">
+		<form action="/gen" method="POST" enctype="multipart/form-data"> 
+			<img src="/img/logo.png"><br>
+			<input id="file" type="file" name="sample" style="display:none;"/>
+			<label id="choose" for="upload">Choose File</label><br>
+			BPM:<input type="text" name="bpm" /><br>
+			Measures:<input type="text" name="measures" /><br>
+			<button>Go</button>
+		</form>
+	</div>
+</div>
