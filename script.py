@@ -124,12 +124,13 @@ sample_bass = sample._spawn(sample.raw_data, overrides={'frame_rate': 44100})
 sample_bass = sample_bass.low_pass_filter(250)
 #sample_bass = AudioSegment.from_wav("loop_bass.wav")
 if sys.argv[3] != "4":
-    if sys.argv[3] == "2":
-        sample = sample+sample
-        sample_low = sample_low+sample_low
-        sample_bass = sample_bass+sample_bass
-    else:
-        quit()
+	pass
+elif sys.argv[3] == "2":
+    sample = sample+sample
+    sample_low = sample_low+sample_low
+    sample_bass = sample_bass+sample_bass
+else:
+    quit()
 sample.normalize()
 sample_low.normalize()
 sample_bass.normalize()
