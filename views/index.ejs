@@ -6,7 +6,6 @@ body,html {
 	background-color:#A3DB92;
 	color:white;
 }
-
 #content {
 	font-family: 'Montserrat', sans-serif;
 	display:flex;
@@ -14,28 +13,91 @@ body,html {
 	justify-content:center;
 	height:100vh
 }
+#file {
+	width: 0.1px;
+	height: 0.1px;
+	opacity: 0;
+	overflow: hidden;
+	position: absolute;
+	z-index: -1;
+}
 #choose {
-	display:inline-block;
-	padding:3px;
-	width:120px;
+    font-size: 1.25em;
+    font-weight: 700;
+    color: white;
+    background-color: black;
+    display: inline-block;
+	width:100%;
+	text-align:center;
+	padding-top:10px;
+	padding-bottom:10px;
+	cursor:pointer;
 	background-color:#FFC7A3;
+	margin-bottom:10px;
+}
+#choose:hover {
+	background-color:#ffddbb;
 }
 #formBox {
-	text-align:center;
+	width:300px;
 }
-
-
+.text {
+	width:100%;
+	height:30px;
+	outline:none;
+	border-style:none;
+	padding-left:1px;
+}
+button {
+	width:100%;
+	height:30px;
+	color: white;
+    height:200px;
+	width:100%;
+	
+	cursor:pointer;
+	background-color:#FFC7A3;
+	outline:none;
+	border-style:none;
+}
+#logo {
+	width:100%;
+	image-rendering: pixelated;
+}
+h1 {
+	text-align:center;
+	font-size:50px;
+}
 </style>
 
 <div id="content">
 	<div id="formBox">
-		<form action="/gen" method="POST" enctype="multipart/form-data"> 
-			<img src="/img/logo.png"><br>
+		<form action="/gen" method="POST" enctype="multipart/form-data">
+			<h1>lofi bot</h1>
+			<img id="logo" src="/img/logo.png"><br>
 			<input id="file" type="file" name="sample" style="display:none;"/>
-			<label id="choose" for="upload">Choose File</label><br>
-			BPM:<input type="text" name="bpm" /><br>
-			Measures:<input type="text" name="measures" /><br>
-			<button>Go</button>
+			<label id="choose" for="file">upload</label><br>
+			<input class="text" name="measures" placeholder="number of measures" />
+			<input class="text" name="bpm" placeholder="bpm" />
+			<button class="text">start</button>
 		</form>
 	</div>
 </div>
+
+<script>
+var label	 = document.getElementById("choose"),
+	labelVal = label.innerHTML;
+document.getElementById("file").addEventListener( 'change', function( e ){
+	var fileName = '';
+	
+	if( this.files && this.files.length > 1 )
+		fileName = ( this.getAttribute( 'data-multiple-caption' ) || '' ).replace( '{count}', this.files.length );
+	else
+		fileName = e.target.value.split( '\\' ).pop();
+
+	if( fileName )
+		label.innerHTML = fileName;
+	else
+		label.innerHTML = labelVal;
+});
+</script>

@@ -7,6 +7,7 @@ var multer  = require('multer')
 var upload = multer({ dest: 'uploads/' })
 app.set('trust proxy', 1) // trust first proxy
 app.use(express.static('./public'));
+const { exec } = require('child_process');
 
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({extended:true}))
@@ -23,6 +24,14 @@ app.get("/",function(req,res){
 app.post("/gen",upload.single('sample'),function(req,res){
 	console.log(req.file);
 	console.log(req.body);
-	res.end("done")
+	var command = "py -3 script.py "+req.file.path+" "+req.body.bpm+" "+req.body.measures;
+	
+	exec(command, (err, stdout, stderr) => {
+	  if (err) {
+		console.error(`exec error: ${err}`);
+		return;
+	  }
+	  res.redirect("/"+stdout.trim());
+	});
 })
 app.listen(port);

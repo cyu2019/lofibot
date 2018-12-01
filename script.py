@@ -7,6 +7,8 @@ import numpy as np
 from scipy.signal import butter, lfilter, freqz
 import math
 import time
+import string
+import os
 
 #https://github.com/IIIIllllIIIIllllIIIIllllIIIIllllIIIIll/python-drums/blob/master/musical/audio/effect.py
 
@@ -97,9 +99,9 @@ sample_edit = librosa.core.resample(sample_edit, 11025, 44100) #resampling back 
 #sample_bass = librosa.effects.pitch_shift(sample_clean, 44100, -12)
 #sample_bass = butter_lowpass_filter(sample_bass, 300, fs)
 #sample_edit = fx(sample_edit) #applying effects
-
-librosa.output.write_wav("loop_edited.wav", sample_edit, 44100,norm=True)
-librosa.output.write_wav("loop_clean.wav", sample_edit, 44100,norm=True)
+token=''.join(random.choice("ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890") for _ in range(10))
+librosa.output.write_wav("loop_edited"+token+".wav", sample_edit, 44100,norm=True)
+#librosa.output.write_wav("loop_clean"+token+".wav", sample_edit, 44100,norm=True)
 #librosa.output.write_wav("loop_bass.wav", sample_bass, 44100,norm=True)
 #librosa.output.write_wav("loop_edited_low.wav", sample_edit_low, 44100,norm=True)
 
@@ -115,7 +117,7 @@ masterbpm = 64
 millis_per_measure = int(4*60000/masterbpm)
 
 song = AudioSegment.empty()
-sample = AudioSegment.from_wav("loop_edited.wav")
+sample = AudioSegment.from_wav("loop_edited"+token+".wav")
 sample_low = sample.low_pass_filter(440)
 new_sample_rate = int(sample.frame_rate * (2.0 ** -1))
 sample_bass = sample._spawn(sample.raw_data, overrides={'frame_rate': 44100})
@@ -140,8 +142,8 @@ drums = drums+drums
 drums = drums+drums
 
 
-sample_drums = drums.overlay(sample,position=0,gain_during_overlay=-6)
-sample_drums = sample_drums.overlay(sample_bass,position=0,gain_during_overlay=-6)
+sample_drums = drums.overlay(sample,position=0,gain_during_overlay=-4)
+sample_drums = sample_drums.overlay(sample_bass,position=0,gain_during_overlay=-8)
 sample_low_drums = drums.overlay(sample_low,position=0,gain_during_overlay=-6)
 
 song += sample_low
@@ -150,11 +152,15 @@ song += sample_low_drums
 song += sample_drums
 song += sample_low
 
-song.fade_in(duration=4*millis_per_measure)
-song.fade_out(duration=4*millis_per_measure)
+song = song.fade_in(duration=4*millis_per_measure)
+song = song.fade_out(duration=4*millis_per_measure)
 
 noise = random.choice([AudioSegment.from_mp3("vinyl.mp3")[:20*millis_per_measure],AudioSegment.from_mp3("rain.mp3")[:20*millis_per_measure]])
 song=noise.overlay(song,gain_during_overlay=-20)
-song.export("blah.wav", format="wav")
+song.export("public/songs/"+token+".wav", format="wav")
+
+os.remove("loop_edited"+token+".wav")
+
+print("songs/"+token+".wav")
 
 #useful command: sound1.overlay(sound2, position=0)
