@@ -123,7 +123,7 @@ new_sample_rate = int(sample.frame_rate * (2.0 ** -1))
 sample_bass = sample._spawn(sample.raw_data, overrides={'frame_rate': 44100})
 sample_bass = sample_bass.low_pass_filter(250)
 #sample_bass = AudioSegment.from_wav("loop_bass.wav")
-if sys.argv[3] != "4":
+if sys.argv[3] == "4":
 	pass
 elif sys.argv[3] == "2":
     sample = sample+sample
@@ -158,7 +158,7 @@ song = song.fade_out(duration=4*millis_per_measure)
 
 noise = random.choice([AudioSegment.from_mp3("vinyl.mp3")[:20*millis_per_measure],AudioSegment.from_mp3("rain.mp3")[:20*millis_per_measure]])
 song=noise.overlay(song,gain_during_overlay=-20)
-song.export("public/songs/"+token+".wav", format="wav")
+song.export("./public/songs/"+token+".wav", format="wav")
 
 os.remove("loop_edited"+token+".wav")
 
