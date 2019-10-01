@@ -2,7 +2,7 @@
 
 hey boys
 
-This is a small webapp written in node.js and python that will accept a 2 or 4 measure 4/4 sample and generate a short lofi hip hop song from it.
+This is a small webapp written in node.js and python for MLH Local Hack Day. It will accept a 2 or 4 measure 4/4 sample and generate a short lofi hip hop song from it.
 
 It can either be run from the command line or from a gui.
 Installation Commands:
